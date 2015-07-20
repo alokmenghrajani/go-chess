@@ -15,42 +15,80 @@ package core
  * 2. for each opponent piece, check if it can specifically capture the king.
  *    (this part can also be optimized with a reverse-check: what pieces can
  *    reach the king).
+ *
+ * Note: when building the list of moves for a piece, if a piece can't move in
+ * a given direction (because it causes the king to be in check), an
+ * optimization is to stop further searches in that direction.
  */
 
 type piece interface {
-	list_moves(*Board, point) moves
-	does_capture_king(*Board, point) bool
+	list_moves(*Board, xy) moves
+	does_capture_king(*Board, xy) bool
 	String() string
 }
 
-type pawn struct {
-}
 type rook struct {
 }
+
+func (rook) list_moves(*Board, xy) moves {
+	return make(moves, 0, 4)
+}
+func (rook) does_capture_king(*Board, xy) bool {
+	return false
+}
+
 type knight struct {
 }
+
+func (knight) list_moves(*Board, xy) moves {
+	return make(moves, 0, 4)
+}
+func (knight) does_capture_king(*Board, xy) bool {
+	return false
+}
+
 type bishop struct {
 }
+
+func (bishop) list_moves(*Board, xy) moves {
+	return make(moves, 0, 4)
+}
+func (bishop) does_capture_king(*Board, xy) bool {
+	return false
+}
+
 type queen struct {
 }
+
+func (queen) list_moves(*Board, xy) moves {
+	return make(moves, 0, 4)
+}
+func (queen) does_capture_king(*Board, xy) bool {
+	return false
+}
+
 type king struct {
 }
 
-func (pawn) String() string {
-	return "p"
+func (king) list_moves(*Board, xy) moves {
+	return make(moves, 0, 4)
 }
+func (king) does_capture_king(*Board, xy) bool {
+	return false
+}
+
 func (rook) String() string {
-	return "r"
+	return "R"
 }
 func (knight) String() string {
-	return "n"
+	return "N"
 }
 func (bishop) String() string {
-	return "b"
+	return "B"
 }
 func (queen) String() string {
-	return "q"
+	return "Q"
 }
 func (king) String() string {
-	return "k"
+	return "K"
 }

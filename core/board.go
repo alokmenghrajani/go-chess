@@ -30,7 +30,7 @@ type square struct {
 type Board struct {
 	board          [8][8]square
 	to_play        color
-	en_passant     int /* if not -1, en_passant allowed on this column */
+	en_passant     int /* if not -2, en_passant allowed on this column */
 	has_moved_king [2]bool
 	has_moved_rook [2][2]bool
 }
@@ -38,7 +38,7 @@ type Board struct {
 func Parse(s string, color color) (*Board, error) {
 	b := new(Board)
 	b.to_play = color
-	b.en_passant = -1
+	b.en_passant = -2
 	board_offset := 0
 	for i := 0; i < len(s); i++ {
 		square := byteToSquare(s[i])
@@ -116,8 +116,8 @@ func (c square) String() string {
 		return "."
 	}
 	s := c.piece.String()
-	if c.color == White {
-		return strings.ToUpper(s)
+	if c.color == Black {
+		return strings.ToLower(s)
 	}
 	return s
 }
