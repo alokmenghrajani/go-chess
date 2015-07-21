@@ -27,16 +27,6 @@ type piece interface {
 	String() string
 }
 
-type knight struct {
-}
-
-func (knight) list_moves(*Board, xy) moves {
-	return make(moves, 0, 4)
-}
-func (knight) does_capture_king(*Board, xy) bool {
-	return false
-}
-
 type bishop struct {
 }
 
@@ -67,9 +57,6 @@ func (king) does_capture_king(*Board, xy) bool {
 	return false
 }
 
-func (knight) String() string {
-	return "N"
-}
 func (bishop) String() string {
 	return "B"
 }
