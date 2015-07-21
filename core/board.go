@@ -53,6 +53,13 @@ func Parse(s string, color color) (*Board, error) {
 	b := new(Board)
 	b.to_play = color
 	b.en_passant = -2
+	b.has_moved_king[0] = true
+	b.has_moved_king[1] = true
+	b.has_moved_rook[0][0] = true
+	b.has_moved_rook[0][1] = true
+	b.has_moved_rook[1][0] = true
+	b.has_moved_rook[1][1] = true
+
 	board_offset := 0
 	for i := 0; i < len(s); i++ {
 		square := byteToSquare(s[i])

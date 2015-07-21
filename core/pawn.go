@@ -6,7 +6,7 @@ type pawn struct {
 }
 
 func (pawn) list_moves(board *Board, point xy) moves {
-	dir, start, end := pawn_get_dir(board)
+	dir, start, end := get_dir(board)
 	r := make(moves, 0, 4)
 	to := xy{x: point.x, y: point.y + dir}
 	if is_empty(board, to) {
@@ -65,17 +65,9 @@ func (pawn) list_moves(board *Board, point xy) moves {
 }
 
 func (pawn) can_capture_king(board *Board, point xy) bool {
-	dir, _, _ := pawn_get_dir(board)
+	dir, _, _ := get_dir(board)
 	return is_opponent_king(board, point.x-1, point.y+dir) ||
 		is_opponent_king(board, point.x+1, point.y+dir)
-}
-
-func pawn_get_dir(board *Board) (int, int, int) {
-	if board.to_play == White {
-		return 1, 1, 7
-	} else {
-		return -1, 6, 0
-	}
 }
 
 /**
