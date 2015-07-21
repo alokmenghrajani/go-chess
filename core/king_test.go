@@ -31,7 +31,7 @@ func TestKingListMoves(t *testing.T) {
 			"........\n"+
 			"........\n", White)
 	moves = b.board[7][3].piece.list_moves(b, xy{7, 3})
-	expecting = "h4→g3,h4→g4,h4→h3,h4→h5"
+	expecting = "h4→g3,h4→g4,h4→h5"
 	if moves.String() != expecting {
 		t.Error(fmt.Sprintf("expecting %s, got %s", expecting, moves))
 	}

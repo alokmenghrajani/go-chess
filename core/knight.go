@@ -8,8 +8,9 @@ func (knight) list_moves(board *Board, point xy) moves {
 		[]xy{xy{-2, -1}, xy{-2, 1}, xy{-1, -2}, xy{-1, 2}, xy{1, -2}, xy{1, 2}, xy{2, -1}, xy{2, 1}}, false)
 }
 
-func (knight) does_capture_king(*Board, xy) bool {
-	return false
+func (knight) can_capture_king(board *Board, point xy) bool {
+	return can_capture_king_common(board, point,
+		[]xy{xy{-2, -1}, xy{-2, 1}, xy{-1, -2}, xy{-1, 2}, xy{1, -2}, xy{1, 2}, xy{2, -1}, xy{2, 1}}, false)
 }
 
 func (knight) String() string {

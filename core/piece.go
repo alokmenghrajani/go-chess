@@ -23,6 +23,6 @@ package core
 
 type piece interface {
 	list_moves(*Board, xy) moves
-	does_capture_king(*Board, xy) bool
+	can_capture_king(*Board, xy) bool
 	String() string
 }

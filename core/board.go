@@ -35,6 +35,20 @@ type Board struct {
 	has_moved_rook [2][2]bool
 }
 
+func (board *Board) ListMoves() moves {
+	r := make(moves, 0, 35)
+	for i := 0; i < 8; i++ {
+		for j := 0; j < 8; j++ {
+			point := xy{i, j}
+			if !is_empty(board, point) && !is_opponent(board, point) {
+				r2 := board.board[i][j].piece.list_moves(board, point)
+				r = append(r, r2...)
+			}
+		}
+	}
+	return r
+}
+
 func Parse(s string, color color) (*Board, error) {
 	b := new(Board)
 	b.to_play = color

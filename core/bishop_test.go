@@ -26,7 +26,7 @@ func TestBishopListMoves(t *testing.T) {
 			"......k.\n"+
 			"........\n"+
 			"....p...\n"+
-			".....K..\n"+
+			"......K.\n"+
 			"P.......\n"+
 			".B......\n"+
 			"........\n", White)

@@ -6,12 +6,7 @@ type pawn struct {
 }
 
 func (pawn) list_moves(board *Board, point xy) moves {
-	var dir, start, end int
-	if board.to_play == White {
-		dir, start, end = 1, 1, 7
-	} else {
-		dir, start, end = -1, 6, 0
-	}
+	dir, start, end := pawn_get_dir(board)
 	r := make(moves, 0, 4)
 	to := xy{x: point.x, y: point.y + dir}
 	if is_empty(board, to) {
@@ -69,6 +64,20 @@ func (pawn) list_moves(board *Board, point xy) moves {
 	return r
 }
 
+func (pawn) can_capture_king(board *Board, point xy) bool {
+	dir, _, _ := pawn_get_dir(board)
+	return is_opponent_king(board, point.x-1, point.y+dir) ||
+		is_opponent_king(board, point.x+1, point.y+dir)
+}
+
+func pawn_get_dir(board *Board) (int, int, int) {
+	if board.to_play == White {
+		return 1, 1, 7
+	} else {
+		return -1, 6, 0
+	}
+}
+
 /**
  * Validates if move causes check or not.
  * Then handles the case where pawn gets promoted.
@@ -88,11 +97,6 @@ func pawn_append_move(board *Board, r moves, m normal_move, end int) (moves, boo
 	} else {
 		return append_if_not_in_check(board, r, m)
 	}
-}
-
-func (pawn) does_capture_king(_ *Board, _ xy) bool {
-	// TODO: implement
-	return false
 }
 
 func (pawn) String() string {
