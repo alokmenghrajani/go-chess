@@ -98,6 +98,43 @@ func append_if_not_in_check(board *Board, moves moves, move move) (moves, bool) 
 	return append(moves, move), true
 }
 
+/**
+ * Handles piece movement for all pieces except pawns
+ */
+func list_moves_common(board *Board, point xy, offsets []xy, repeat bool) moves {
+	r := make(moves, 0, 30)
+	for _, offset := range offsets {
+		r = list_moves_direction(r, board, point, offset, repeat)
+	}
+	return r
+}
+
+func list_moves_direction(r moves, board *Board, point xy, offset xy, repeat bool) moves {
+	for i := 1; i < 8; i++ {
+		to := xy{point.x + offset.x*i, point.y + offset.y*i}
+		if to.x < 0 || to.x >= 8 || to.y < 0 || to.y >= 8 {
+			// we hit the edge of the board
+			return r
+		}
+		if board.board[to.x][to.y].piece == nil ||
+			board.board[to.x][to.y].color != board.to_play {
+			// we are moving into an empty square or capturing a piece
+			var ok bool
+			r, ok = append_if_not_in_check(board, r,
+				normal_move{abstract_move{point, to}})
+			if !ok {
+				// moving this piece caused a check, so we are done.
+				return r
+			}
+		}
+		if !repeat || board.board[to.x][to.y].piece != nil {
+			// we are done
+			return r
+		}
+	}
+	return r
+}
+
 func flip_color(c color) color {
 	if c == White {
 		return Black

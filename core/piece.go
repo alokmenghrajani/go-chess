@@ -27,16 +27,6 @@ type piece interface {
 	String() string
 }
 
-type rook struct {
-}
-
-func (rook) list_moves(*Board, xy) moves {
-	return make(moves, 0, 4)
-}
-func (rook) does_capture_king(*Board, xy) bool {
-	return false
-}
-
 type knight struct {
 }
 
@@ -77,9 +67,6 @@ func (king) does_capture_king(*Board, xy) bool {
 	return false
 }
 
-func (rook) String() string {
-	return "R"
-}
 func (knight) String() string {
 	return "N"
 }
