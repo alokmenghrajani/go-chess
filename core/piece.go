@@ -26,17 +26,3 @@ type piece interface {
 	does_capture_king(*Board, xy) bool
 	String() string
 }
-
-type king struct {
-}
-
-func (king) list_moves(*Board, xy) moves {
-	return make(moves, 0, 4)
-}
-func (king) does_capture_king(*Board, xy) bool {
-	return false
-}
-
-func (king) String() string {
-	return "K"
-}
