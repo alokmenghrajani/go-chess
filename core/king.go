@@ -7,7 +7,7 @@ import (
 type king struct {
 }
 
-func (king) list_moves(board *Board, point xy) moves {
+func (king) list_moves(board *Board, point xy) Moves {
 	moves := list_moves_common(board, point,
 		[]xy{xy{-1, -1}, xy{-1, 0}, xy{-1, 1}, xy{0, -1}, xy{0, 1}, xy{1, -1}, xy{1, 0}, xy{1, 1}}, false)
 	// Castling rules:
@@ -22,11 +22,11 @@ func (king) list_moves(board *Board, point xy) moves {
 	dir, first_rank, _ := get_dir(board)
 	first_rank = first_rank - dir
 	if board.has_moved_king[board.to_play] {
-		fmt.Printf("king has moved\n")
+		// king has moved
 		return moves
 	}
-	if is_in_check(board) {
-		fmt.Printf("king is in check\n")
+	if Is_in_check(board) {
+		// king is in check
 		return moves
 	}
 	assert(point.x == 4 && point.y == first_rank,
@@ -62,7 +62,7 @@ func king_can_castle_short(board *Board, first_rank int) bool {
 		from := xy{4, first_rank}
 		to := xy{offset, first_rank}
 		move := normal_move{abstract_move{from, to}}
-		r := make(moves, 0, 1)
+		r := make(Moves, 0, 1)
 		_, ok := append_if_not_in_check(board, r, move)
 		if !ok {
 			fmt.Printf("append_if_not_in_check returned false %s (short)\n", to)
@@ -93,7 +93,7 @@ func king_can_castle_long(board *Board, first_rank int) bool {
 		from := xy{4, first_rank}
 		to := xy{offset, first_rank}
 		move := normal_move{abstract_move{from, to}}
-		r := make(moves, 0, 1)
+		r := make(Moves, 0, 1)
 		_, ok := append_if_not_in_check(board, r, move)
 		if !ok {
 			return false

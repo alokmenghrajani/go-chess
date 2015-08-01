@@ -5,9 +5,9 @@ package core
 type pawn struct {
 }
 
-func (pawn) list_moves(board *Board, point xy) moves {
+func (pawn) list_moves(board *Board, point xy) Moves {
 	dir, start, end := get_dir(board)
-	r := make(moves, 0, 4)
+	r := make(Moves, 0, 4)
 	to := xy{x: point.x, y: point.y + dir}
 	if is_empty(board, to) {
 		// try to move forward
@@ -74,7 +74,7 @@ func (pawn) can_capture_king(board *Board, point xy) bool {
  * Validates if move causes check or not.
  * Then handles the case where pawn gets promoted.
  */
-func pawn_append_move(board *Board, r moves, m normal_move, end int) (moves, bool) {
+func pawn_append_move(board *Board, r Moves, m normal_move, end int) (Moves, bool) {
 	if m.to.y == end {
 		_, ok := append_if_not_in_check(board, r, m)
 		if ok {

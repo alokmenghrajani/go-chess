@@ -22,7 +22,7 @@ package core
  */
 
 type piece interface {
-	list_moves(*Board, xy) moves
+	list_moves(*Board, xy) Moves
 	can_capture_king(*Board, xy) bool
 	String() string
 }

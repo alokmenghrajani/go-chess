@@ -8,7 +8,7 @@ import (
 // We could have one struct with enough information to represent the different
 // types of moves, but it felt cleaner to use multiple types.
 type move interface {
-	perform_move(board *Board) *Board
+	Perform_move(board *Board) *Board
 	String() string
 }
 
@@ -43,7 +43,7 @@ type king_castle struct {
 	rook abstract_move
 }
 
-type moves []move
+type Moves []move
 
 func perform_move_helper(board *Board, m abstract_move) *Board {
 	b := *board // make a copy of the board
@@ -65,30 +65,30 @@ func perform_move_helper(board *Board, m abstract_move) *Board {
 	return &b
 }
 
-func (m normal_move) perform_move(board *Board) *Board {
+func (m normal_move) Perform_move(board *Board) *Board {
 	return perform_move_helper(board, m.abstract_move)
 }
 
-func (m pawn_push_two) perform_move(board *Board) *Board {
+func (m pawn_push_two) Perform_move(board *Board) *Board {
 	b := perform_move_helper(board, m.abstract_move)
 	assert(m.to.x == m.from.x, "pawn push_push_to not in straight line")
 	b.en_passant = m.to.x
 	return b
 }
 
-func (m pawn_promote) perform_move(board *Board) *Board {
+func (m pawn_promote) Perform_move(board *Board) *Board {
 	b := perform_move_helper(board, m.abstract_move)
 	b.board[m.to.x][m.to.y].piece = m.piece
 	return b
 }
 
-func (m pawn_en_passant) perform_move(board *Board) *Board {
+func (m pawn_en_passant) Perform_move(board *Board) *Board {
 	b := perform_move_helper(board, m.abstract_move)
 	b.board[m.to.x][m.from.y] = square{nil, White}
 	return b
 }
 
-func (m king_castle) perform_move(board *Board) *Board {
+func (m king_castle) Perform_move(board *Board) *Board {
 	b := perform_move_helper(board, m.king)
 	return perform_move_helper(b, m.rook)
 }
@@ -125,8 +125,8 @@ func is_rook(board *Board, point xy) bool {
 	return ok
 }
 
-func append_if_not_in_check(board *Board, moves moves, move move) (moves, bool) {
-	b := move.perform_move(board)
+func append_if_not_in_check(board *Board, moves Moves, move move) (Moves, bool) {
+	b := move.Perform_move(board)
 	if is_checking(b) {
 		return moves, false
 	}
@@ -147,7 +147,7 @@ func is_checking(board *Board) bool {
 	return false
 }
 
-func is_in_check(board *Board) bool {
+func Is_in_check(board *Board) bool {
 	b := *board
 	b.to_play = flip_color(b.to_play)
 	return is_checking(&b)
@@ -156,15 +156,15 @@ func is_in_check(board *Board) bool {
 /**
  * Handles piece movement for all pieces except pawns
  */
-func list_moves_common(board *Board, point xy, offsets []xy, repeat bool) moves {
-	r := make(moves, 0, 30)
+func list_moves_common(board *Board, point xy, offsets []xy, repeat bool) Moves {
+	r := make(Moves, 0, 30)
 	for _, offset := range offsets {
 		r = list_moves_direction(r, board, point, offset, repeat)
 	}
 	return r
 }
 
-func list_moves_direction(r moves, board *Board, point xy, offset xy, repeat bool) moves {
+func list_moves_direction(r Moves, board *Board, point xy, offset xy, repeat bool) Moves {
 	for i := 1; i < 8; i++ {
 		to := xy{point.x + offset.x*i, point.y + offset.y*i}
 		if !is_in_bounds(to.x, to.y) {
@@ -262,7 +262,7 @@ func (m king_castle) String() string {
 	return "0-0"
 }
 
-func (moves moves) String() string {
+func (moves Moves) String() string {
 	r := make([]string, len(moves))
 	for k, m := range moves {
 		r[k] = m.String()
