@@ -172,13 +172,10 @@ func list_moves_direction(r Moves, board *Board, point xy, offset xy, repeat boo
 		}
 		if is_empty(board, to) || is_opponent(board, to) {
 			// we are moving into an empty square or capturing a piece
-			var ok bool
-			r, ok = append_if_not_in_check(board, r,
+			r, _ = append_if_not_in_check(board, r,
 				normal_move{abstract_move{point, to}})
-			if !ok {
-				// moving this piece caused a check, so we are done.
-				return r
-			}
+			// If we wanted to implement the moving piece causes check optimization,
+			// we would need to check that the initial position was not in check.
 		}
 		if !repeat || !is_empty(board, to) {
 			// we are done

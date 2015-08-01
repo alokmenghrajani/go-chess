@@ -17,7 +17,7 @@ func TestNormalMovePerformMove(t *testing.T) {
 			"........\n", White)
 	b.en_passant = 1
 	move := normal_move{abstract_move{xy{3, 2}, xy{4, 2}}}
-	b = move.perform_move(b)
+	b = move.Perform_move(b)
 	_, ok := b.board[4][2].piece.(*king)
 	if !ok {
 		t.Error(fmt.Sprintf("expecting king, got %s", b.board[4][2]))
@@ -39,7 +39,7 @@ func TestPawnPushTwoPerformMove(t *testing.T) {
 			".P......\n"+
 			"........\n", White)
 	move := pawn_push_two{abstract_move{xy{1, 1}, xy{1, 3}}}
-	b = move.perform_move(b)
+	b = move.Perform_move(b)
 	_, ok := b.board[1][3].piece.(*pawn)
 	if !ok {
 		t.Error(fmt.Sprintf("expecting king, got %s", b.board[4][2]))
@@ -61,7 +61,7 @@ func TestPawnPromotePerformMove(t *testing.T) {
 			"........\n"+
 			"........\n", White)
 	move := pawn_promote{abstract_move{xy{1, 6}, xy{1, 7}}, new(queen)}
-	b = move.perform_move(b)
+	b = move.Perform_move(b)
 	_, ok := b.board[1][7].piece.(*queen)
 	if !ok {
 		t.Error(fmt.Sprintf("expecting queen, got %s", b.board[1][7]))
@@ -83,7 +83,7 @@ func TestPawnEnPassantPerformMove(t *testing.T) {
 			"........\n"+
 			"........\n", White)
 	move := pawn_en_passant{abstract_move{xy{1, 4}, xy{2, 5}}}
-	b = move.perform_move(b)
+	b = move.Perform_move(b)
 	_, ok := b.board[2][5].piece.(*pawn)
 	if !ok {
 		t.Error(fmt.Sprintf("expecting pawn, got %s", b.board[2][5]))

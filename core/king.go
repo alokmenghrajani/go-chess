@@ -46,14 +46,14 @@ func (king) list_moves(board *Board, point xy) Moves {
 
 func king_can_castle_short(board *Board, first_rank int) bool {
 	if board.has_moved_rook[board.to_play][1] {
-		fmt.Printf("rook has moved (short)\n")
+		// rook has moved (short)
 		return false
 	}
 	// check that every cell between king and rook is empty
 	for _, offset := range []int{5, 6} {
 		to := xy{offset, first_rank}
 		if !is_empty(board, to) {
-			fmt.Printf("cell %s isn't empty (short)\n", to)
+			// cell isn't empty (short)
 			return false
 		}
 	}
@@ -65,7 +65,6 @@ func king_can_castle_short(board *Board, first_rank int) bool {
 		r := make(Moves, 0, 1)
 		_, ok := append_if_not_in_check(board, r, move)
 		if !ok {
-			fmt.Printf("append_if_not_in_check returned false %s (short)\n", to)
 			return false
 		}
 	}
@@ -77,7 +76,6 @@ func king_can_castle_short(board *Board, first_rank int) bool {
 
 func king_can_castle_long(board *Board, first_rank int) bool {
 	if board.has_moved_rook[board.to_play][0] {
-		fmt.Printf("rook has moved (long)\n")
 		return false
 	}
 	// check that every cell between king and rook is empty

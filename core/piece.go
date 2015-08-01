@@ -18,7 +18,8 @@ package core
  *
  * Note: when building the list of moves for a piece, if a piece can't move in
  * a given direction (because it causes the king to be in check), an
- * optimization is to stop further searches in that direction.
+ * optimization is to stop further searches in that direction (if the king
+ * wasn't in check).
  */
 
 type piece interface {
