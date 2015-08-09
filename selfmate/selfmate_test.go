@@ -205,3 +205,91 @@ func TestPuzzle9(t *testing.T) {
 		t.Error(fmt.Printf("Expecting: %s, but got %s", expecting, selfmate))
 	}
 }
+
+/**
+ * Agnel 1868, selfmate in 3
+ */
+func TestPuzzle10(t *testing.T) {
+	s :=
+		"......b.\n" +
+			"........\n" +
+			"....RQ..\n" +
+			"......p.\n" +
+			".......q\n" +
+			"........\n" +
+			"........\n" +
+			"K.k.....\n"
+	board, _ := core.Parse(s, core.White)
+	logger := logger.New(false)
+	selfmate := Find(logger, board, 6)
+	expecting := "d1→c2,c3→c2,h4→e1,e6→e1,c1→d1,f6→c3"
+	if selfmate.String() != expecting {
+		t.Error(fmt.Printf("Expecting: %s, but got %s", expecting, selfmate))
+	}
+}
+
+/**
+ * Baird 1891, selfmate in 3
+ */
+func TestPuzzle11(t *testing.T) {
+	s :=
+		".......n\n" +
+			"..N....Q\n" +
+			"......r.\n" +
+			"..K.p...\n" +
+			".P..k..N\n" +
+			".....q..\n" +
+			"..P.bPB.\n" +
+			"..B.R...\n"
+	board, _ := core.Parse(s, core.White)
+	logger := logger.New(false)
+	selfmate := Find(logger, board, 6)
+	expecting := "f3→c3,b5→c3,g2→f3,f2→f3,f3→g2,c7→b5"
+	if selfmate.String() != expecting {
+		t.Error(fmt.Printf("Expecting: %s, but got %s", expecting, selfmate))
+	}
+}
+
+/**
+ * Heathcote, selfmate in 3
+ */
+func TestPuzzle12(t *testing.T) {
+	s :=
+		"........\n" +
+			".nN.Q...\n" +
+			"..p...pr\n" +
+			"..pp.kpb\n" +
+			"..N...nP\n" +
+			".....K.B\n" +
+			"..P..RP.\n" +
+			"B.......\n"
+	board, _ := core.Parse(s, core.White)
+	logger := logger.New(false)
+	selfmate := Find(logger, board, 6)
+	expecting := "h5→g4,h3→g4,g5→f4,d6→f4,b7→a5,e7→d6"
+	if selfmate.String() != expecting {
+		t.Error(fmt.Printf("Expecting: %s, but got %s", expecting, selfmate))
+	}
+}
+
+/**
+ * Vladimirov, Kopaev et al. 1975, selfmate in 3
+ */
+func TestPuzzle13(t *testing.T) {
+	s :=
+		"..b.....\n" +
+			".rBr..p.\n" +
+			"p.p..pN.\n" +
+			"..P..Kp.\n" +
+			"....P.B.\n" +
+			".....R..\n" +
+			"....QPk.\n" +
+			"....R...\n"
+	board, _ := core.Parse(s, core.White)
+	logger := logger.New(false)
+	selfmate := Find(logger, board, 6)
+	expecting := "d7→d2,f2→f3,a5→a4,e2→c2,a6→a5,f3→b3"
+	if selfmate.String() != expecting {
+		t.Error(fmt.Printf("Expecting: %s, but got %s", expecting, selfmate))
+	}
+}
